@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Alerts Dashboard</title>
+    <style>
+        body {
+            font-family: 'Fira Mono', 'Consolas', 'Courier New', monospace;
+            margin: 0;
+            background: #111;
+            color: #39ff14;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #181818;
+            padding: 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 24px #00ff41cc, 0 0 4px #00ff41cc;
+        }
+        h1 {
+            text-align: center;
+            color: #39ff14;
+            text-shadow: 0 0 8px #39ff14, 0 0 2px #fff;
+            letter-spacing: 2px;
+        }
+        .alert-card {
+            background: #181818;
+            border-left: 6px solid #39ff14;
+            margin-bottom: 18px;
+            padding: 18px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px #00ff41cc;
+            color: #39ff14;
+            transition: box-shadow 0.2s;
+        }
+        .alert-card:hover {
+            box-shadow: 0 0 24px #00ff41cc, 0 0 8px #00ff41cc;
+        }
+        .alert-card h3 {
+            margin-top: 0;
+            color: #39ff14;
+            text-shadow: 0 0 4px #39ff14;
+        }
+        .alert-card p {
+            margin: 5px 0;
+            font-size: 1em;
+        }
+        .alert-card pre {
+            background: #111;
+            color: #39ff14;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.95em;
+            box-shadow: 0 0 8px #00ff4144;
+        }
+        a, a:visited {
+            color: #39ff14;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>&#128187; Security Alerts Dashboard</h1>
+        <div id="alerts-list">
+            <p>Loading alerts...</p>
+        </div>
+    </div>
+    <script>
+        async function fetchAlerts() {
+            const response = await fetch('/api/alerts');
+            const alerts = await response.json();
+            const alertsList = document.getElementById('alerts-list');
+            alertsList.innerHTML = '';
+            if (alerts.length === 0) {
+                alertsList.innerHTML = '<p>No alerts detected yet.</p>';
+                return;
+            }
+            alerts.forEach(alert => {
+                const card = document.createElement('div');
+                card.classList.add('alert-card');
+                card.innerHTML = `
+                    <h3>${alert.alert_type}</h3>
+                    <p><strong>Timestamp:</strong> ${new Date(alert.timestamp).toLocaleString()}</p>
+                    <p><strong>IP Address:</strong> ${alert.ip_address || alert.src_ip || 'N/A'}</p>
+                    <pre>${JSON.stringify(alert, null, 2)}</pre>
+                `;
+                alertsList.appendChild(card);
+            });
+        }
+        fetchAlerts();
+        setInterval(fetchAlerts, 10000);
+    </script>
+</body>
+</html> 

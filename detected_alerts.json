@@ -1,0 +1,15 @@
+[
+    {
+        "alert_type": "Brute Force Detected",
+        "ip_address": "192.168.1.100",
+        "failed_attempts_count": 5,
+        "details": [
+            "User: user1, Port: 50001",
+            "User: user2, Port: 50002",
+            "User: user3, Port: 50003",
+            "User: user4, Port: 50004",
+            "User: user5, Port: 50005"
+        ],
+        "timestamp": "2025-06-30T21:31:20.497245"
+    }
+]
