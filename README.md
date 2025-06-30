@@ -4,7 +4,8 @@ A mini-pipeline to detect suspicious activities from system logs, with real-time
 
 ## Pipeline Schema
 
-![Pipeline Schema](../Editor%20_%20Mermaid%20Chart-2025-06-30-205308.png)
+![Editor _ Mermaid Chart-2025-06-30-205308](https://github.com/user-attachments/assets/fb512fa9-0c39-42c1-9f3b-9101b51cc8c8)
+
 
 ## Features
 
